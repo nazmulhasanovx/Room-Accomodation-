@@ -112,3 +112,17 @@ This file describes expected QA results for BinGi HMS Accommodation Management r
 - Does not specify unverified current backend entity names as fact.
 - Does not automatically migrate existing records or modify live hotel data.
 - Does not claim every Accommodation Type has a separate live published interface; they share the universal wizard.
+
+## Video Tour — QA scenarios (V1)
+- V01 Admin saves an optional valid YouTube watch URL while creating/editing a Room Category; existing and future units inherit it.
+- V02 Category without URL remains publishable and guest gallery shows photos normally.
+- V03 Valid youtu.be link normalized; malformed URL / unknown hosts rejected; no arbitrary iframe HTML executed.
+- V04 A valid YouTube Shorts URL can be handled only when supported by the implementation.
+- V05 Unit-specific tour overrides category tour; override can explicitly hide tour; empty defaults to inherit.
+- V06 Guests browsing category without an allocated exact unit see honest “Actual room layout/view may vary” caption.
+- V07 Watch Video Tour button shows thumbnail, opens responsive modal; close restores navigation and booking CTA.
+- V08 Player is lazy-loaded only after click; video does not autoplay or block initial page rendering.
+- V09 Deleted/unavailable/geo-restricted video displays graceful fallback, optional Open on YouTube and photos.
+- V10 Mobile keyboard, accessible button label, privacy/embed policy and per-property RBAC reviewed.
+- V11 Verify same tour behavior across Room, Cottage, Villa, Apartment, Dormitory, Other/Custom.
+- V12 Category default update does not overwrite independently set unit-specific URL or hide state.
