@@ -138,3 +138,6 @@ New Accommodation
 - Nonconsecutive numbers are accepted; duplicates are rejected.
 - 100+ levels and nonnumeric floor codes work with configured formats.
 - Mobile/narrow UI displays one stage at a time with stable actions and preserved state.
+
+## Media Defaults for All Categories
+YouTube Video Tour URL is **category-specific**, so it is entered **once while creating/editing the category**, not during first-time Property Configuration and never demanded for every new unit. The Property Configuration stage may show that the optional video feature is enabled globally, but must not ask for a YouTube link there. Individual unit overrides and guests' category-vs-exact-unit context must be respected. See MASTER-PLAN.md → YouTube Video Tour.
