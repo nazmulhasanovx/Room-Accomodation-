@@ -18,6 +18,13 @@ A single, consistent management flow for six accommodation options: **Room, Cott
 7. [06-DORMITORY-SETUP.md](06-DORMITORY-SETUP.md) — rooms, bed spaces, per-bed pricing and bookings.
 8. [07-OTHER-CUSTOM-SETUP.md](07-OTHER-CUSTOM-SETUP.md) — constrained, configurable nonstandard accommodation.
 9. [08-VALIDATION-AND-QA.md](08-VALIDATION-AND-QA.md) — acceptance criteria and regression checklist.
+10. [09-ACCOMMODATION-ECOSYSTEM-CHANGE-IMPACT.md](09-ACCOMMODATION-ECOSYSTEM-CHANGE-IMPACT.md) — approved migration impact checklist across HMS Web, Guest App, HMS Mobile App, booking websites, APIs, finance and integrations.
+
+## Approved cross-platform naming (06 Nov 2026)
+- **HMS Web & HMS Mobile sidebar:** dynamic **Rooms** for room-only properties; **Accommodations** for mixed or non-Room properties.
+- **Guest App browse/listing:** **Stays**.
+- **Generic physical inventory:** **Unit / Unit Number**, with natural type-specific guest labels such as Room 101 and Villa V01.
+- See the [full ecosystem migration note](09-ACCOMMODATION-ECOSYSTEM-CHANGE-IMPACT.md) before renaming other modules or changing schemas.
 
 ## Locked V1 design decisions
 - Property type is separate from accommodation type; Suite, Deluxe, Twin, Double are **categories / attributes**, not six new top-level types.
