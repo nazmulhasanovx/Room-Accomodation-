@@ -104,3 +104,63 @@ Apartment codes must remain property-unique. When two towers each have apartment
 5. No floor or building creation repeated on every add.
 6. Per-bedroom booking is not accidentally exposed.
 7. Room and Apartment share numbering infrastructure without forcing identical prefixes.
+
+## YouTube Video Tour — Accommodation Category / Unit (V1 addition, 06 Nov 2026)
+
+### Product requirement
+A guest should be able to **watch an authentic video walkthrough before booking**. The hotel admin can paste a **YouTube video URL** when creating or editing an Accommodation Category. It is optional: a missing or unavailable video must never prevent creating or publishing an otherwise valid category. The same reusable media feature is available for Room, Cottage, Villa, Apartment, Dormitory and Other / Custom.
+
+### Where the field appears
+- **Category Create / Edit → Media & Gallery**: optional field **YouTube Video Tour URL** with placeholder \`https://www.youtube.com/watch?v=...\`, **Preview**, **Remove**, optional Video Title (default: “Watch Video Tour”), and clear saved/invalid state.
+- **Unit Details → Media**: optional **Unit-Specific YouTube Video Tour** override when an individual unit has a genuinely different view/layout. If empty, category tour is inherited. Do not request the link for every unit.
+- **Guest Room/Accommodation Detail → Gallery**: show a distinct **Watch Video Tour** thumbnail/tile/button next to photos, then play inside a dismissible modal or open YouTube. The booking CTA remains usable. Responsive on desktop and mobile.
+
+### Priority and accuracy
+\`\`\`text
+Property Accommodation Category (e.g., Deluxe Twin)
+  -> Saved category YouTube URL
+  -> Added units 101, 103, 105 inherit category tour
+  -> Unit 103 has its own video? YES -> show 103 video when unit 103 is actually represented
+                                NO  -> show category video
+  -> Guest browses a category without exact assigned unit?
+       -> Show representative category tour + “Actual room layout/view may vary”
+  -> Invalid/missing/unavailable video?
+       -> Photos-only gallery; no broken player or blank box
+\`\`\`
+**Never imply a category video depicts the exact assigned room unless that room has been verified/allocated and its video matches.** A property may use the same category for units with different views.
+
+### Developer field model (adapt to actual backend)
+\`\`\`text
+accommodation_categories
+  video_tour_url?: string       // canonical validated YouTube link
+  video_tour_video_id?: string  // extracted for embed/thumbnail
+  video_tour_title?: string
+  video_tour_enabled?: boolean
+
+accommodation_units
+  video_tour_url_override?: string | null
+  video_tour_enabled_override?: boolean | null
+
+effective_tour = active valid unit override ?? active valid category tour ?? none
+\`\`\`
+Store the URL and derived video ID as metadata; do not store iframe/embed HTML from the operator. Unit override semantics should distinguish **inherit / replace / hide**, rather than treat an intentionally hidden video as merely missing.
+
+### Validation / safety / performance
+1. Accept supported **YouTube video links** (\`youtube.com/watch?v=...\`, \`youtu.be/...\`; \`youtube.com/shorts/...\` if supported by the embed component). Extract canonical video ID using an actual URL parser and a strict allowed-host check. Reject arbitrary domains, unsafe embed HTML and nonvideo YouTube URLs.
+2. Render a **lazy-loaded thumbnail** and only load the YouTube player after a guest clicks; **no autoplay**. Prefer privacy-enhanced \`youtube-nocookie.com\` embed where available, with an appropriate video-provider/privacy notice.
+3. Warn if the URL format is invalid. A valid-looking link is not proof the video is public, playable, available in region or still online; handle playback errors with **Open on YouTube** and photos fallback.
+4. Escape titles, restrict video ID format and use safe iframe permissions/sandbox/referrer configuration appropriate to the player. Never concatenate untrusted raw URLs into HTML.
+5. Video may be unlisted but accessible by link; never claim it is private to a single guest. Ask owner to use only videos they are authorized to share.
+6. Tour is **optional** and should not block draft, publish, booking, room creation, channel listing or existing photo display.
+7. The room type / category tour must be used consistently on the BinGi guest-facing website/booking experience; each channel's own support for video can be handled separately.
+
+### Guest-facing wireflow
+\`\`\`text
+Guest explores Accommodation Category
+  -> Room / Villa / Cottage / Apartment detail
+  -> Gallery: Photos | [Watch Video Tour ▶] (only if link available)
+  -> Click -> modal player -> close
+  -> Review features, price and booking terms -> Continue Booking
+\`\`\`
+
+**Apartment-specific:** The category tour may show a 2BR layout, kitchen and living area. Exact floor/view varies between A101/A103/A105; use an accurate representative-video notice unless the specific unit is guaranteed.
