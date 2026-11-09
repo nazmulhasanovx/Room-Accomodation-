@@ -55,10 +55,10 @@ docs/
 
 Property Type is single-select; Accommodation Types multi-select. Set Property location/numbering once, reuse forever. Generic physical inventory is Unit; Staff UI uses Rooms if Room-only or Accommodations otherwise; Guest App uses Stays. Local Door Number may repeat in different buildings, but a Full Unit Code is unique per property and a UUID is immutable.
 
-Legacy numbered files 01–10 remain as bookmark redirects. The canonical rules are in this docs/ hierarchy. Never migrate a live Hotel schema directly from a proposal without reconciling current Room/Booking/OTA data.
+Original numbered files 01–10 are restored as complete historical V1.1 specifications, not redirect stubs. The canonical current V1.2 rules are in this docs/ hierarchy. Never migrate a live Hotel schema directly from a proposal without reconciling current Room/Booking/OTA data.
 
 ## Historical versions and original file preservation
 
-**V1.1 original (09 Nov 2026):** [Open full untouched 12-file archive](versions/v1.1-2026-11-09/README.md). The archive includes the original [MASTER-PLAN](versions/v1.1-2026-11-09/MASTER-PLAN.md), [README](versions/v1.1-2026-11-09/README.md) and all 10 numbered detailed specs. The original root filenames `01-...` through `10-...` have also been **restored to their full prior content**, not shortened to redirect notices.
+**V1.1 original (09 Nov 2026):** [Open full untouched 12-file archive](versions/v1.1-2026-11-09/ARCHIVE-README.md). The archive includes the original [MASTER-PLAN](versions/v1.1-2026-11-09/MASTER-PLAN.md), [README](versions/v1.1-2026-11-09/README.md) and all 10 numbered detailed specs. The original root filenames `01-...` through `10-...` have also been **restored to their full prior content**, not shortened to redirect notices.
 
 **V1.2 current:** this README, [MASTER-PLAN](MASTER-PLAN.md) and the organized `docs/` hierarchy. Treat canonical V1.2 files as implementation guidance; read V1.1 to preserve context and compare historical decisions. Existing detail is never removed merely because a new revision supersedes it.
