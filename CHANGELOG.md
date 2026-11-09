@@ -15,3 +15,10 @@
 - Property type mapping and location/numbering templates.
 ## V1.0 — 06 November 2026
 - Initial Master Plan, per-type setup docs, QA and migration checklist.
+
+## Preservation fix — 09 November 2026
+
+- Restored the full original content for root `01-...` through `10-...` (reversing the earlier redirect-only replacement).
+- Created [complete original V1.1 snapshot](versions/v1.1-2026-11-09/README.md) with all 12 historical Markdown files including MASTER-PLAN and README; original blobs preserved unchanged.
+- Kept current V1.2 `docs/` content and current Master Plan intact; README now explains which version is current.
+- This is documentation-only; no HMS production application code/data has been modified.
