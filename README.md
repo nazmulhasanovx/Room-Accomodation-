@@ -1,53 +1,58 @@
-# BinGi HMS — Accommodation Management Blueprint
+# BinGi HMS — Accommodation Management Documentation
 
-**Product:** BinGi Hotel Management Technology (by NEONECY)  
-**Market:** Bangladesh-first; scalable to multi-property hospitality operations  
-**Documentation:** Planning specification, not implemented production code  
-**Version:** V1.0 | 06 November 2026
+**NEONECY · BinGi Hotel Management Technology** · **V1.2 · 09 November 2026**  
+**Status:** Product/UX/engineering specification, **not deployed software**.
 
-## Purpose
-A single, consistent management flow for six accommodation options: **Room, Cottage, Villa, Apartment, Dormitory, Other / Custom**. Property owners configure their property structure and number formats once; staff subsequently create accommodation categories and physical inventory without reentering the same data.
+## Canonical reading order
 
-## Read in this order
-1. [MASTER-PLAN.md](MASTER-PLAN.md) — complete architecture, rules, flows, screen map, booking logic and rollout.
-2. [01-PROPERTY-CONFIGURATION.md](01-PROPERTY-CONFIGURATION.md) — one-time property setup, locations, hierarchy and numbering.
-3. [02-ROOM-SETUP.md](02-ROOM-SETUP.md) — room categories and floor-based room numbers.
-4. [03-COTTAGE-SETUP.md](03-COTTAGE-SETUP.md) — zones, optional blocks and cottage IDs.
-5. [04-VILLA-SETUP.md](04-VILLA-SETUP.md) — private villas, multiple bedrooms and whole-villa inventory.
-6. [05-APARTMENT-SETUP.md](05-APARTMENT-SETUP.md) — apartment types, towers, floors and unit IDs.
-7. [06-DORMITORY-SETUP.md](06-DORMITORY-SETUP.md) — rooms, bed spaces, per-bed pricing and bookings.
-8. [07-OTHER-CUSTOM-SETUP.md](07-OTHER-CUSTOM-SETUP.md) — constrained, configurable nonstandard accommodation.
-9. [08-VALIDATION-AND-QA.md](08-VALIDATION-AND-QA.md) — acceptance criteria and regression checklist.
-10. [09-ACCOMMODATION-ECOSYSTEM-CHANGE-IMPACT.md](09-ACCOMMODATION-ECOSYSTEM-CHANGE-IMPACT.md) — approved migration impact checklist across HMS Web, Guest App, HMS Mobile App, booking websites, APIs, finance and integrations.
+1. [Master Plan](MASTER-PLAN.md) — complete end-to-end flow.
+2. [Property and Accommodation Types](docs/01-foundations/01-property-and-accommodation-types.md) — **10 Property Types, 6 backend Core Types and 14 visible accommodation options**.
+3. [One-Time Setup](docs/01-foundations/02-one-time-configuration.md) — saved locations, formats and policies.
+4. [Locations and Numbering](docs/01-foundations/03-location-and-numbering.md) — Floor/Block/Zone, full library picker, unique codes.
+5. [Universal Creation Flow](docs/02-accommodation-flows/00-universal-creation-flow.md) — consistent five-stage wizard.
+6. [Booking and Availability](docs/03-booking-and-inventory/01-availability-and-allocations.md) — unassigned reservations and conflict safety.
+7. [Draft, Rate and Publishing](docs/03-booking-and-inventory/02-drafts-rates-publishing.md) — draft ownership, price/availability.
+8. [QA Acceptance](docs/05-quality/01-qa-and-acceptance.md) — tests and release gates.
+9. [Open Decisions](docs/05-quality/02-open-decisions.md) — approvals required.
 
-## Approved cross-platform naming (06 Nov 2026)
-- **HMS Web & HMS Mobile sidebar:** dynamic **Rooms** for room-only properties; **Accommodations** for mixed or non-Room properties.
-- **Guest App browse/listing:** **Stays**.
-- **Generic physical inventory:** **Unit / Unit Number**, with natural type-specific guest labels such as Room 101 and Villa V01.
-- See the [full ecosystem migration note](09-ACCOMMODATION-ECOSYSTEM-CHANGE-IMPACT.md) before renaming other modules or changing schemas.
+## Repository map
 
-## Locked V1 design decisions
-- Property type is separate from accommodation type; Suite, Deluxe, Twin, Double are **categories / attributes**, not six new top-level types.
-- **Configure once → reuse always**: property profile, buildings, floors, zones, blocks, location strategy, codes and defaults.
-- Categories define product characteristics; physical units define inventory; dormitory beds are independently sellable spaces.
-- One familiar 5-stage wizard with conditional fields. Dormitory Bed Configuration is nested inside Units & Inventory, not an unrelated user experience.
-- A category chooses an applicable location hierarchy; **Floor is not imposed on Villas / Cottages**.
-- Auto-suggest IDs but support nonconsecutive numbers (e.g., 101, 103) and deliberate overrides with validation.
-- Every property-scoped physical unit identifier must be unique under the saved code policy. Database IDs remain immutable.
-- Prevent destructive changes affecting active bookings, bed allocations, maintenance, rates or linked reports.
+```text
+README.md
+MASTER-PLAN.md
+CHANGELOG.md
+docs/
+  01-foundations/
+    01-property-and-accommodation-types.md
+    02-one-time-configuration.md
+    03-location-and-numbering.md
+  02-accommodation-flows/
+    00-universal-creation-flow.md
+    01-room.md
+    02-cottage.md
+    03-villa.md
+    04-apartment.md
+    05-dormitory.md
+    06-other-custom.md
+    07-shared-media-and-amenities.md
+  03-booking-and-inventory/
+    01-availability-and-allocations.md
+    02-drafts-rates-publishing.md
+  04-ecosystem/
+    01-migration-and-impact.md
+  05-quality/
+    01-qa-and-acceptance.md
+    02-open-decisions.md
+```
 
-## Operating idea
-~~~text
-Property Profile
-   -> One-Time Accommodation Configuration
-   -> Accommodation Dashboard
-   -> Select Type
-   -> Select Existing Category OR Create Category
-   -> Select Preconfigured Building/Floor or Zone/Block
-   -> Generate or Select Unit IDs
-   -> Review Inherited Defaults
-   -> Draft / Publish
-   -> Booking Inventory
-~~~
+## Type-specific documents
 
-The repository is a **product/design/developer handoff**, not a claim that these features already exist in the deployed HMS. Technical implementation choices should be validated with the current backend schema before migration.
+[Room](docs/02-accommodation-flows/01-room.md) · [Cottage](docs/02-accommodation-flows/02-cottage.md) · [Villa](docs/02-accommodation-flows/03-villa.md) · [Apartment](docs/02-accommodation-flows/04-apartment.md) · [Dormitory](docs/02-accommodation-flows/05-dormitory.md) · [Other / Custom](docs/02-accommodation-flows/06-other-custom.md) · [Shared Video / Amenities](docs/02-accommodation-flows/07-shared-media-and-amenities.md) · [Ecosystem Migration](docs/04-ecosystem/01-migration-and-impact.md).
+
+**Visible accommodation tiles (14):** Room, Cottage, Villa, Apartment, Dormitory, Bungalow, Cabin, Chalet, Treehouse, Tent / Glamping, Houseboat, Capsule / Pod, Holiday Home, Other / Custom.
+
+**Internal stable Core Types (6):** ROOM, COTTAGE, VILLA, APARTMENT, DORMITORY, OTHER. Extra visible cards are **presets**, not additional booking engines; owner can adjust the preset's appropriate Core Type before publishing. Suites/Deluxe/Twin/Studio/Penthouse remain Category/Configuration.
+
+Property Type is single-select; Accommodation Types multi-select. Set Property location/numbering once, reuse forever. Generic physical inventory is Unit; Staff UI uses Rooms if Room-only or Accommodations otherwise; Guest App uses Stays. Local Door Number may repeat in different buildings, but a Full Unit Code is unique per property and a UUID is immutable.
+
+Legacy numbered files 01–10 remain as bookmark redirects. The canonical rules are in this docs/ hierarchy. Never migrate a live Hotel schema directly from a proposal without reconciling current Room/Booking/OTA data.
